@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Product from "./Product";
 
 // a place to display all products returned from api in card elements
 function Products() {
@@ -15,14 +16,10 @@ function Products() {
     },[]);
 
     return (
-        <div id="all-products">
-            <ul>
+        <div id="all-products-container">
             {
-                products.map( product => {
-                    return <li key={product.id}>{product.title}</li>
-                })
+                products.map( product => <Product id={product.id} key={product.id} /> )
             }
-            </ul>
         </div>
     );
 }
