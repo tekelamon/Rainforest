@@ -25,6 +25,7 @@ function Product( {id} ) {
             <p className="product-price">{product.price}</p>
         </div>
     );
+    // TODO create api services panel to contain all api requests (stay DRY for api endpoint)
 }
 
 export default Product;
