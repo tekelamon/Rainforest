@@ -8,9 +8,13 @@ function Products() {
     // get products from api
     useEffect(()=>{
         const getAllProducts = async () => {
-            fetch('https://fakestoreapi.com/products')
-                .then( res => res.json() )
-                .then( json => setProducts( json ) )
+            try {
+                fetch('https://fakestoreapi.com/products')
+                    .then( res => res.json() )
+                    .then( json => setProducts( json ) )
+            } catch (err) {
+                console.error( err );
+            }
         };
         getAllProducts();
     },[]);
