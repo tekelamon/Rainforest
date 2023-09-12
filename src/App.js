@@ -5,7 +5,7 @@ import './App.css';
 // pages
 import Navigation from './components/Navigation';   // navigation across top of screen
 import Products from './components/Products';       // main browsing page of products
-import Product from './components/Product';         // individual product details
+import ProductDetails from './components/ProductDetails'; // individual product details
 import Cart from './components/Cart';               // entire cart
 
 import Login from './components/Login';             // login page
@@ -20,7 +20,7 @@ function App() {
           {/* these routes will share the navigation at top of screen */}
           <Route element={<Navigation />} path='/' >
             <Route index element={<Products />} />
-            <Route element={<Product />} path='/product' />
+            <Route element={<ProductDetails />} path='/product/:id' />
             <Route element={<Cart />} path='/cart' />
           </Route>
 
