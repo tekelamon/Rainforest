@@ -1,21 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { getProductById } from "./api-services";
+
 function Product( {id} ) {
     const [product, setProduct] = useState({});
 
     // get product from api
     useEffect(()=>{
-        const getProduct = async () => {
-            try {
-                fetch(`https://fakestoreapi.com/products/${id}`)
-                    .then( res => res.json() )
-                    .then( json => setProduct( json ) )
-            } catch (err) {
-                console.error( err );
-            }
+        const getData = async () => {
+            const response = await getProductById(id);
+            setProduct( response );
         }
-        getProduct();
+        getData();
     },[]);
 
     // transform data to card element
@@ -24,10 +21,9 @@ function Product( {id} ) {
             <h2 className="product-title">{product.title}</h2>
             <img className="product-image" src={product.image} />
             <p className="product-price">{product.price}</p>
-            <Link to={`/product/${product.id}`} >View Details</Link>
+            <Link to={`/product/${id}`} >View Details</Link>
         </div>
     );
-    // TODO create api services panel to contain all api requests (stay DRY for api endpoint)
 }
 
 export default Product;

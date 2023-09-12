@@ -1,22 +1,18 @@
 import { useState, useEffect } from "react";
 import Product from "./Product";
+import { getAllProducts } from "./api-services";
 
-// a place to display all products returned from api in card elements
+// display all products returned from api in card elements
 function Products() {
     const [products, setProducts] = useState([]);
 
     // get products from api
     useEffect(()=>{
-        const getAllProducts = async () => {
-            try {
-                fetch('https://fakestoreapi.com/products')
-                    .then( res => res.json() )
-                    .then( json => setProducts( json ) )
-            } catch (err) {
-                console.error( err );
-            }
-        };
-        getAllProducts();
+        const getData = async () => {
+            const response = await getAllProducts();
+            setProducts( response );
+        }
+        getData();
     },[]);
 
     return (
