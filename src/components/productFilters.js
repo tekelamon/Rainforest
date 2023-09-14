@@ -25,4 +25,6 @@ const filterProducts = ( products, searchCriteria ) => {
     return foundProducts;
 };
 
-export default filterProducts;
+export {
+    filterProducts
+}
