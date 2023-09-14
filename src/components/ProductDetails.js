@@ -15,10 +15,10 @@ const ProductDetails = () => {
             setProduct( response );
         };
         getData();
-    },[]);
+    });
 
     return <div>
-        <img src={product.image} className="product-details-image"/>
+        <img src={product.image} className="product-details-image" alt="" />
         <h2 className="product-details-title">{product.title}</h2>
         <p className="product-details-price">{product.price}</p>
         {/* TODO make button to add to cart when cart is functional */}

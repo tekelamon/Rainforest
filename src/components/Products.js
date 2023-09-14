@@ -22,7 +22,7 @@ function Products() {
         const foundProducts = [];
 
         // filter using the state tracked from our input
-        products.filter( product => {
+        products.forEach( product => {
             // get all data from the product
             const fields = Object.values( product );
 

@@ -13,13 +13,13 @@ function Product( {id} ) {
             setProduct( response );
         }
         getData();
-    },[]);
+    });
 
     // transform data to card element
     return (
         <div className="product">
             <h2 className="product-title">{product.title}</h2>
-            <img className="product-image" src={product.image} />
+            <img className="product-image" src={product.image} alt="" />
             <p className="product-price">{product.price}</p>
             <Link to={`/product/${id}`} >View Details</Link>
         </div>
