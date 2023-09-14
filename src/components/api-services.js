@@ -2,6 +2,8 @@
 
 const BASE_API = 'https://fakestoreapi.com';
 const PRODUCTS = `${BASE_API}/products`;
+const ALL_CATEGORIES = `${PRODUCTS}/categories`;
+const CATEGORIES = `${PRODUCTS}/category`;
 
 const getAllProducts = async () => {
     try {
@@ -21,9 +23,31 @@ const getProductById = async (id) => {
     } catch (err) {
         console.error( err );
     }
+};
+
+const getCategories = async () => {
+    try {
+        const response = await fetch(`${ALL_CATEGORIES}`);
+        const categories = await response.json();
+        return categories;
+    } catch (err) {
+        console.error( err );
+    }
 }
+
+const getProductsByCategory = async (category) => {
+    try {
+        const response = await fetch(`${CATEGORIES}/${category}`);
+        const products = await response.json();
+        return products;
+    } catch (err) {
+        console.error( err );
+    }
+};
 
 export {
     getAllProducts,
-    getProductById
+    getProductById,
+    getCategories,
+    getProductsByCategory
 }
