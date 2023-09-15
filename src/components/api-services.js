@@ -25,7 +25,7 @@ const getProductById = async (id) => {
     }
 };
 
-const getCategories = async () => {
+const getAllCategories = async () => {
     try {
         const response = await fetch(`${ALL_CATEGORIES}`);
         const categories = await response.json();
@@ -48,6 +48,6 @@ const getProductsByCategory = async (category) => {
 export {
     getAllProducts,
     getProductById,
-    getCategories,
+    getAllCategories,
     getProductsByCategory
 }
