@@ -45,9 +45,40 @@ const getProductsByCategory = async (category) => {
     }
 };
 
+const createUser = async (user) => {
+    try {
+        const message = {
+            method:"POST",
+            body:JSON.stringify(
+                {
+                    email:`${user.email}`,
+                    username:`${user.username}`,
+                    password:`${user.password}`,
+                    name:{
+                        firstname:`${user.firstName}`,
+                        lastname:`${user.lastName}`
+                    },
+                    address:{
+                        city:`${user.city}`,
+                        street:`${user.street}`,
+                        zipcode:`${user.zip}`
+                    },
+                    phone:`${user.phoneNumber}`
+                }
+            )
+        };
+        const response = await fetch('https://fakestoreapi.com/users', message );
+        const createUserResponse = await response.json();
+        return createUserResponse;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
 export {
     getAllProducts,
     getProductById,
     getAllCategories,
-    getProductsByCategory
+    getProductsByCategory,
+    createUser
 }
