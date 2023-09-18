@@ -4,39 +4,61 @@ import { createUser } from "./api-services";
 function Signup() {
     const [user, setUser] = useState({});
 
-    // connect to api to authenticate responses
+    // send user data to api for creation
     useEffect(()=>{
-        const testUser = {
-            firstName:'John',
-            lastName:'Doe',
-
-            email:'example@gmail.com',
-            phoneNumber:'1-555-555-5555',
-
-            city:'middle',
-            street:'of nowhere',
-            zip:'9001',
-
-            username:'test',
-            password:'testpass'
+        const sendUserData = async () => {
+            const response = await createUser( user );
+            // output response status from api
+            console.log( {response} );
         };
-        const makeUser = async () => {
-            const response = await createUser( testUser );
-            setUser( response );
+        sendUserData();
+    // updates when a user is created
+    },[user]);
+
+    const validate = inputs => {
+        // TODO validate each field
+        const data = {isValid:true} // temp response for testing
+        return data;
+    };
+
+    const makeUser = event => {
+        event.preventDefault();
+
+        // get formData
+        const data = new FormData( event.target );
+
+        // create user with data
+        const inputs = {
+            firstName: data.get("firstName"),
+            lastName: data.get("lastName"),
+
+            email: data.get("email"),
+            phoneNumber: data.get("phoneNumber"),
+
+            city: data.get("city"),
+            street: data.get("street"),
+            zip: data.get("zip"),
+
+            username: data.get("username"),
+            password: data.get("password")
         };
-        makeUser();
-    },[]);
 
-    // successfully creates but only returns id
-    // api documentation states it should contain object with all user data
-    console.log( user );
+        // validate each field
+        const fields = validate( inputs );
+        if( fields.isValid ) {
+            // send user data to api
+            setUser( inputs );
+            // send update to user
+        } else {
+            // TODO send message for each failing field and their requirements
+        }
+    };
 
-    // TODO set form action to create user and send to api
     return (
         <div id="signupForm-container">
-            <form id="signupForm">
-                <p>Nice to meet you! Your name is?</p>
+            <form id="signupForm" onSubmit={ event => makeUser( event ) } >
                 {/* Name */}
+                <p>Nice to meet you! Your name is?</p>
                 <label
                     htmlFor="firstName"
                     className="signupFormText"
@@ -45,6 +67,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="firstName"
+                    name="firstName"
                 />
                 <label
                     htmlFor="lastName"
@@ -54,6 +77,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="lastName"
+                    name="lastName"
                 />
 
                 {/* Shipping info */}
@@ -66,6 +90,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="city"
+                    name="city"
                 />
                 <label
                     htmlFor="street"
@@ -75,6 +100,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="street"
+                    name="street"
                 />
                 <label
                     htmlFor="zip"
@@ -84,6 +110,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="zip"
+                    name="zip"
                 />
 
                 {/* Contact info */}
@@ -96,6 +123,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="email"
+                    name="email"
                 />
                 <label
                     htmlFor="phoneNumber"
@@ -105,6 +133,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="phoneNumber"
+                    name="phoneNumber"
                 />
 
                 {/* Account info */}
@@ -117,6 +146,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="username"
+                    name="username"
                 />
                 <label
                     htmlFor="password"
@@ -126,6 +156,7 @@ function Signup() {
                     className="signupFormInput"
                     type="text"
                     id="password"
+                    name="password"
                 />
 
                 <input id="signupFormSubmit" type="submit" value="Submit" />
