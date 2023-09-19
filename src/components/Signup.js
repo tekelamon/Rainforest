@@ -4,6 +4,8 @@ import { createUser } from "./api-services";
 function Signup() {
     const [user, setUser] = useState({});
 
+    const MAX_LENGTH = 50;
+
     // send user data to api for creation
     useEffect(()=>{
         const sendUserData = async () => {
@@ -15,10 +17,31 @@ function Signup() {
     // updates when a user is created
     },[user]);
 
-    const validate = inputs => {
-        // TODO validate each field
-        const data = {isValid:true} // temp response for testing
-        return data;
+    const validate = ({email, phoneNumber, password}) => {
+        // name and address will be skipped, they could theoretically be anything
+        // username is up to the user
+        // ensure email, phone number, and password fit pattern
+        // for contact and security
+
+        let validEmail = false;
+        // matches anything in the form text@example.com where each char_str can be up to 50 characters
+        const emailRequirements = /^\w{1,50}@\w{1,50}\.\w{1,50}$/;
+
+        let validPhone = false;
+        // matches any string in the form +1(555)-555-5555 where the +1, (, ) and -'s are optional
+        const phoneRequirements = /(\+1)?\(?\d{3}\)?-?\d{3}-?\d{4}/;
+
+        let validPassword = false;
+        // matches any string that is 8 to 16 characters and all alphanumeric or symbols
+        const passwordRequirements = /(\w|[^\w\s]){8,16}/;
+
+        if( email.match( emailRequirements ) ) { validEmail = true; }
+
+        if( phoneNumber.match( phoneRequirements ) ) { validPhone = true; }
+
+        if( password.match( passwordRequirements ) ) { validPassword = true; }
+
+        return {validEmail, validPhone, validPassword};
     };
 
     const makeUser = event => {
@@ -43,14 +66,16 @@ function Signup() {
             password: data.get("password")
         };
 
-        // validate each field
-        const fields = validate( inputs );
-        if( fields.isValid ) {
+        // validate required inputs
+        const {validEmail, validPhone, validPassword} = validate( inputs );
+        if( validEmail && validPhone && validPassword ) {
             // send user data to api
             setUser( inputs );
             // send update to user
+            console.log( "user created successfully" );
         } else {
-            // TODO send message for each failing field and their requirements
+            // TODO conditionally render requirements for each failing field
+            console.log( "failed to make user" )
         }
     };
 
@@ -64,20 +89,24 @@ function Signup() {
                     className="signupFormText"
                 >First Name: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="firstName"
                     name="firstName"
+                    maxLength={MAX_LENGTH}
                 />
                 <label
                     htmlFor="lastName"
                     className="signupFormText"
                 >Last Name: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="lastName"
                     name="lastName"
+                    maxLength={MAX_LENGTH}
                 />
 
                 {/* Shipping info */}
@@ -87,30 +116,36 @@ function Signup() {
                     className="signupFormText"
                 >City: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="city"
                     name="city"
+                    maxLength={MAX_LENGTH}
                 />
                 <label
                     htmlFor="street"
                     className="signupFormText"
                 >Street: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="street"
                     name="street"
+                    maxLength={MAX_LENGTH}
                 />
                 <label
                     htmlFor="zip"
                     className="signupFormText"
                 >Zip Code: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="zip"
                     name="zip"
+                    maxLength={MAX_LENGTH}
                 />
 
                 {/* Contact info */}
@@ -120,16 +155,19 @@ function Signup() {
                     className="signupFormText"
                 >Email: </label>
                 <input
+                    required
                     className="signupFormInput"
-                    type="text"
+                    type="email"
                     id="email"
                     name="email"
+                    maxLength={MAX_LENGTH}
                 />
                 <label
                     htmlFor="phoneNumber"
                     className="signupFormText"
                 >Phone Number: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="phoneNumber"
@@ -143,20 +181,24 @@ function Signup() {
                     className="signupFormText"
                 >Username: </label>
                 <input
+                    required
                     className="signupFormInput"
                     type="text"
                     id="username"
                     name="username"
+                    maxLength={MAX_LENGTH}
                 />
                 <label
                     htmlFor="password"
                     className="signupFormText"
                 >Password: </label>
                 <input
+                    required
                     className="signupFormInput"
-                    type="text"
+                    type="password"
                     id="password"
                     name="password"
+                    maxLength={MAX_LENGTH}
                 />
 
                 <input id="signupFormSubmit" type="submit" value="Submit" />
