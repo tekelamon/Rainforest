@@ -2,18 +2,27 @@ import { useState, useEffect } from "react";
 import { createUser } from "./api-services";
 
 function Signup() {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
+    const [success, setSuccess] = useState("");
+    const [createError, setCreateError] = useState("");
 
+    // single control used for input length in form
     const MAX_LENGTH = 50;
 
     // send user data to api for creation
     useEffect(()=>{
         const sendUserData = async () => {
             const response = await createUser( user );
-            // output response status from api
-            console.log( {response} );
+
+            // api limitations mean existence of an id is a successful response 
+            if( response.id ) {
+                setSuccess("Account successfully created. Happy shopping!");
+            } else {
+                setCreateError("Trouble creating account, please try again.");
+            }
         };
-        sendUserData();
+        // only send api call if data is present
+        if( user ) { sendUserData(); }
     // updates when a user is created
     },[user]);
 
@@ -32,8 +41,8 @@ function Signup() {
         const phoneRequirements = /(\+1)?\(?\d{3}\)?-?\d{3}-?\d{4}/;
 
         let validPassword = false;
-        // matches any string that is 8 to 16 characters and all alphanumeric or symbols
-        const passwordRequirements = /(\w|[^\w\s]){8,16}/;
+        // matches any string that is 8 to 50 characters and all alphanumeric or symbols
+        const passwordRequirements = /(\w|[^\w\s]){8,50}/;
 
         if( email.match( emailRequirements ) ) { validEmail = true; }
 
@@ -69,10 +78,8 @@ function Signup() {
         // validate required inputs
         const {validEmail, validPhone, validPassword} = validate( inputs );
         if( validEmail && validPhone && validPassword ) {
-            // send user data to api
+            // update user data
             setUser( inputs );
-            // send update to user
-            console.log( "user created successfully" );
         } else {
             // TODO conditionally render requirements for each failing field
             console.log( "failed to make user" )
@@ -81,6 +88,8 @@ function Signup() {
 
     return (
         <div id="signupForm-container">
+            { success && <p id="accCreateSuccess">{success}</p>}
+            { createError && <p id="accCreateError">{createError}</p>}
             <form id="signupForm" onSubmit={ event => makeUser( event ) } >
                 {/* Name */}
                 <p>Nice to meet you! Your name is?</p>
