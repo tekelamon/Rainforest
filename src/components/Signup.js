@@ -33,16 +33,19 @@ function Signup() {
         // for contact and security
 
         let validEmail = false;
-        // matches anything in the form text@example.com where each char_str can be up to 50 characters
-        const emailRequirements = /^\w{1,50}@\w{1,50}\.\w{1,50}$/;
+        // '@' and '.' will be used to verify an email address
+        // matches anything in the form text@example.com where
+        // the length of each string may vary but at least 1 char is required
+        const emailRequirements = /^\w+@\w+\.\w+$/;
 
         let validPhone = false;
         // matches any string in the form +1(555)-555-5555 where the +1, (, ) and -'s are optional
-        const phoneRequirements = /(\+1)?\(?\d{3}\)?-?\d{3}-?\d{4}/;
+        // assumes 10 digit U.S. phone number
+        const phoneRequirements = /^(\+1)?\(?\d{3}\)?-?\d{3}-?\d{4}$/;
 
         let validPassword = false;
-        // matches any string that is 8 to 50 characters and all alphanumeric or symbols
-        const passwordRequirements = /(\w|[^\w\s]){8,50}/;
+        // matches any string that is at least 8 characters and all alphanumeric or symbols
+        const passwordRequirements = /^(\w|[^\w\s]){8,}$/;
 
         if( email.match( emailRequirements ) ) { validEmail = true; }
 
@@ -181,6 +184,7 @@ function Signup() {
                     type="text"
                     id="phoneNumber"
                     name="phoneNumber"
+                    maxLength={MAX_LENGTH}
                 />
 
                 {/* Account info */}
