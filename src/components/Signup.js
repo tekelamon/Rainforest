@@ -6,6 +6,11 @@ function Signup() {
     const [success, setSuccess] = useState("");
     const [createError, setCreateError] = useState("");
 
+    // toggles for account creation help
+    const [showEmailRequirements, setShowEmailRequirements ] = useState(false);
+    const [showPhoneNumberRequirements , setShowPhoneNumberRequirements  ] = useState(false);
+    const [showPasswordRequirements , setShowPasswordRequirements  ] = useState(false);
+
     // single control used for input length in form
     const MAX_LENGTH = 50;
 
@@ -59,6 +64,10 @@ function Signup() {
     const makeUser = event => {
         event.preventDefault();
 
+        // reset state in case of multiple retries
+        setSuccess("");
+        setCreateError("");
+
         // get formData
         const data = new FormData( event.target );
 
@@ -81,18 +90,32 @@ function Signup() {
         // validate required inputs
         const {validEmail, validPhone, validPassword} = validate( inputs );
         if( validEmail && validPhone && validPassword ) {
+            // turn off help flags, successful inputs received
+            setShowEmailRequirements(false);
+            setShowPhoneNumberRequirements(false);
+            setShowPasswordRequirements(false);
+
             // update user data
             setUser( inputs );
         } else {
-            // TODO conditionally render requirements for each failing field
-            console.log( "failed to make user" )
+            // update flags for inputs
+            validEmail ? setShowEmailRequirements(false) : setShowEmailRequirements(true);
+            validPhone ? setShowPhoneNumberRequirements(false) : setShowPhoneNumberRequirements(true);
+            validPassword ? setShowPasswordRequirements(false) : setShowPasswordRequirements(true);
         }
     };
 
     return (
         <div id="signupForm-container">
+            {/* pass/fail for api endpoint */}
             { success && <p id="accCreateSuccess">{success}</p>}
             { createError && <p id="accCreateError">{createError}</p>}
+
+            {/* Help for user when creating account */}
+            { showEmailRequirements && <p>Email requirements</p>}
+            { showPhoneNumberRequirements && <p>Phone number requirements</p>}
+            { showPasswordRequirements && <p>Password requirements</p>}
+
             <form id="signupForm" onSubmit={ event => makeUser( event ) } >
                 {/* Name */}
                 <p>Nice to meet you! Your name is?</p>
