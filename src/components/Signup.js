@@ -3,7 +3,7 @@ import { FormText, validate } from "./signupFormHelpers";
 import { useState, useEffect } from "react";
 import { createUser } from "./api-services";
 
-function Signup() {
+function Signup( { setUserAccount, userEndpoint } ) {
     const [user, setUser] = useState(null);
     const [success, setSuccess] = useState("");
     const [createError, setCreateError] = useState("");

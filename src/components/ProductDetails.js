@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { getProductById } from "./api-services";
 import { useState, useEffect } from "react";
 
-const ProductDetails = () => {
+const ProductDetails = ( { userAccount } ) => {
     const [product, setProduct] = useState({});
 
     // get id of the individual product from the link passed in

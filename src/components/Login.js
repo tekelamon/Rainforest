@@ -1,13 +1,23 @@
 import { loginUser } from "./api-services";
 import { useEffect, useState } from "react";
 
-function Login() {
+function Login( { setUserAccount, userEndpoint } ) {
     const [inputs, setInputs] = useState(null);
 
     useEffect(()=>{
         const attemptLogin = async () => {
             const response = await loginUser( inputs );
-            console.log( response );
+            if( response.token ) {
+                // const id = get user from api
+
+                // update localStorage for usage later
+                // localStorage.setItem(userEndpoint, id);
+
+                // update user state for other components
+                // setUserAccount( id );
+            } else {
+                // login failed
+            }
         };
         // only attempt login after inputs are received
         if( inputs ) { attemptLogin(); }

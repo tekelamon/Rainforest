@@ -7,7 +7,7 @@ import {
 import { filterProducts } from "./productFilters";
 
 // display all products returned from api in card elements
-function Products() {
+function Products( { userAccount } ) {
     const [allProducts, setAllProducts] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
 
@@ -50,7 +50,7 @@ function Products() {
     // control for category search 
     const categoryButtons = allCategories.map( currentCategory => {
         return (
-            <div>
+            <div key={currentCategory}>
                 <input type="radio"
                     id={currentCategory}
                     name="category"
