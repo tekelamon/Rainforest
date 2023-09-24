@@ -18,8 +18,8 @@ function App() {
   const USERACC = "rainforestUserAccount";
   const [userAccount, setUserAccount] = useState( localStorage.getItem(`${USERACC}`) );
 
-  // TODO add main cart state to be shared between components to reduce api calls
-    // then pass down to each component for usage
+  const [userCart, setUserCart] = useState(null);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -54,6 +54,7 @@ function App() {
             <Login
               setUserAccount={setUserAccount}
               userEndpoint={USERACC}
+              setUserCart={setUserCart}
             />}
             path='/login'
           />
