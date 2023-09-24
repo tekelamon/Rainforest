@@ -1,4 +1,4 @@
-function Cart() {
+function Cart( { userAccount } ) {
     return <p>Cart</p>;
 }
 

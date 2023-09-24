@@ -4,6 +4,9 @@ const BASE_API = 'https://fakestoreapi.com';
 const PRODUCTS = `${BASE_API}/products`;
 const ALL_CATEGORIES = `${PRODUCTS}/categories`;
 const CATEGORIES = `${PRODUCTS}/category`;
+const USERS = `${BASE_API}/users`;
+const LOGIN = `${BASE_API}/auth/login`;
+const CARTS = `${BASE_API}/carts`;
 
 const getAllProducts = async () => {
     try {
@@ -67,9 +70,72 @@ const createUser = async (user) => {
                 }
             )
         };
-        const response = await fetch('https://fakestoreapi.com/users', message );
+        const response = await fetch(`${USERS}`, message );
         const createUserResponse = await response.json();
         return createUserResponse;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const loginUser = async (input) => {
+    try {
+        const message = {
+            method:"POST",
+            body:JSON.stringify(
+                {
+                    username:`${input.username}`,
+                    password:`${input.password}`
+                }
+            ),
+            headers:{
+                "Content-Type":"application/json"
+            },
+            redirect:"follow"
+        };
+        const response = await fetch(`${LOGIN}`, message );
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getAllCarts = async () => {
+    try {
+        const response = await fetch(`${CARTS}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getCart = async (id) => {
+    try {
+        const response = await fetch(`${CARTS}/${id}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getAllUsers = async () => {
+    try {
+        const response = await fetch(`${USERS}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getUser = async (id) => {
+    try {
+        const response = await fetch(`${USERS}/${id}`);
+        const result = await response.json();
+        return result;
     } catch (err) {
         console.error( err );
     }
@@ -80,5 +146,10 @@ export {
     getProductById,
     getAllCategories,
     getProductsByCategory,
-    createUser
+    createUser,
+    loginUser,
+    getAllCarts,
+    getCart,
+    getAllUsers,
+    getUser
 }
