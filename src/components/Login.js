@@ -1,4 +1,4 @@
-import { loginUser } from "./api-services";
+import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
 function Login( { setUserAccount, userEndpoint } ) {
@@ -8,13 +8,18 @@ function Login( { setUserAccount, userEndpoint } ) {
         const attemptLogin = async () => {
             const response = await loginUser( inputs );
             if( response.token ) {
-                // const id = get user from api
+                const accounts = await getAllUsers();
+                const [matchedAccount] = accounts.filter( user => user.username === inputs.username );
 
-                // update localStorage for usage later
-                // localStorage.setItem(userEndpoint, id);
+                // get cart to add shopping functionality
+                const cart = await getCart(matchedAccount.id);
+                console.log( cart );
+
+                // update localStorage to be used to find account on site visit
+                localStorage.setItem(userEndpoint, matchedAccount.id);
 
                 // update user state for other components
-                // setUserAccount( id );
+                setUserAccount( matchedAccount );
             } else {
                 // login failed
             }
