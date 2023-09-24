@@ -6,6 +6,7 @@ const ALL_CATEGORIES = `${PRODUCTS}/categories`;
 const CATEGORIES = `${PRODUCTS}/category`;
 const USERS = `${BASE_API}/users`;
 const LOGIN = `${BASE_API}/auth/login`;
+const CARTS = `${BASE_API}/carts`;
 
 const getAllProducts = async () => {
     try {
@@ -100,11 +101,55 @@ const loginUser = async (input) => {
     }
 };
 
+const getAllCarts = async () => {
+    try {
+        const response = await fetch(`${CARTS}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getCart = async (id) => {
+    try {
+        const response = await fetch(`${CARTS}/${id}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getAllUsers = async () => {
+    try {
+        const response = await fetch(`${USERS}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
+const getUser = async (id) => {
+    try {
+        const response = await fetch(`${USERS}/${id}`);
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error( err );
+    }
+};
+
 export {
     getAllProducts,
     getProductById,
     getAllCategories,
     getProductsByCategory,
     createUser,
-    loginUser
+    loginUser,
+    getAllCarts,
+    getCart,
+    getAllUsers,
+    getUser
 }
