@@ -18,7 +18,8 @@ function App() {
   const USERACC = "rainforestUserAccount";
   const [userAccount, setUserAccount] = useState( localStorage.getItem(`${USERACC}`) );
 
-  const [userCart, setUserCart] = useState(null);
+  const USERCART = "rainforestUserCart";
+  const [userCart, setUserCart] = useState( localStorage.getItem(`${USERCART}`) );
 
   return (
     <div className="App">
@@ -55,6 +56,7 @@ function App() {
               setUserAccount={setUserAccount}
               userEndpoint={USERACC}
               setUserCart={setUserCart}
+              cartEndpoint={USERCART}
             />}
             path='/login'
           />

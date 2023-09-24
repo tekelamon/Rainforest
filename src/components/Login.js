@@ -1,7 +1,7 @@
 import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
-function Login( { setUserAccount, userEndpoint, setUserCart } ) {
+function Login( { setUserAccount, userEndpoint, setUserCart, cartEndpoint } ) {
     const [success, setSuccess] = useState("");
     const [loginFail, setLoginFail] = useState("");
 
@@ -18,7 +18,8 @@ function Login( { setUserAccount, userEndpoint, setUserCart } ) {
                 const cart = await getCart( matchedAccount.id );
 
                 // update localStorage to be used to find account on site visit
-                localStorage.setItem(userEndpoint, matchedAccount.id);
+                localStorage.setItem(userEndpoint, matchedAccount);
+                localStorage.setItem(cartEndpoint, cart);
 
                 // update user states for other components
                 setUserAccount( matchedAccount );
