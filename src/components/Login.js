@@ -2,6 +2,9 @@ import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
 function Login( { setUserAccount, userEndpoint, setUserCart } ) {
+    const [success, setSuccess] = useState("");
+    const [loginFail, setLoginFail] = useState("");
+
     const [inputs, setInputs] = useState(null);
 
     useEffect(()=>{
@@ -20,8 +23,12 @@ function Login( { setUserAccount, userEndpoint, setUserCart } ) {
                 // update user states for other components
                 setUserAccount( matchedAccount );
                 setUserCart( cart );
+
+                // update user on UI
+                setSuccess(`Logged in successfully, welcome ${matchedAccount.name.firstname}`);
             } else {
                 // login failed
+                setLoginFail("Incorrect username or password");
             }
         };
         // only attempt login after inputs are received
@@ -32,6 +39,10 @@ function Login( { setUserAccount, userEndpoint, setUserCart } ) {
     const handleSubmit = event => {
         event.preventDefault();
 
+        // reset pass/fail states on new login attempt
+        setSuccess("");
+        setLoginFail("");
+
         // get data from form
         const data = new FormData( event.target );
 
@@ -40,15 +51,13 @@ function Login( { setUserAccount, userEndpoint, setUserCart } ) {
             username:data.get("username"),
             password:data.get("password")
         };
-        console.log( {newLoginAttempt} );
         setInputs( newLoginAttempt );
-
-        // update user
-        console.log("Hey I'm trying here!");
     };
 
     return (
         <div id="loginFormContainer">
+            { success && <p>{success}</p>}
+            { loginFail && <p>{loginFail}</p>}
             <form id="loginForm" onSubmit={event => handleSubmit(event) } >
                 <label className="loginFormText" htmlFor="username" >Username: </label>
                 <input id="username" name="username" className="loginFormInput" />
