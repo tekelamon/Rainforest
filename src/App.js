@@ -14,7 +14,7 @@ import Signup from './components/Signup';           // signup page
 
 
 function App() {
-  // check localStorage for user sign in ( either id or null )
+  // check localStorage for user sign in
   const USERACC = "rainforestUserAccount";
   const [userAccount, setUserAccount] = useState( localStorage.getItem(`${USERACC}`) );
 
@@ -27,30 +27,28 @@ function App() {
         <Routes>
           {/* these routes will share the navigation at top of screen */}
           <Route element={<Navigation />} path='/' >
-            {/* 
-              TODO access user info to generate content for cart usage
-                like add to cart, view cart, checkout
-            */}
             <Route index element={
               <Products
                 userAccount={userAccount}
+                cartEndpoint={USERCART}
               />}
             />
             <Route element={
               <ProductDetails
                 userAccount={userAccount}
+                cartEndpoint={USERCART}
               />} 
               path='/product/:id'
             />
             <Route element={
               <Cart
                 userAccount={userAccount}
+                cartEndpoint={USERCART}
               />}
               path='/cart'
             />
           </Route>
 
-          {/* TODO update user info on successful login/signup */}
           <Route element={
             <Login
               setUserAccount={setUserAccount}
