@@ -3,7 +3,7 @@ import { FormText, validate } from "./signupFormHelpers";
 import { useState, useEffect } from "react";
 import { createUser } from "./api-services";
 
-function Signup( { setUserAccount, userEndpoint } ) {
+function Signup( { userEndpoint, cartEndpoint } ) {
     const [user, setUser] = useState(null);
     const [success, setSuccess] = useState("");
     const [createError, setCreateError] = useState("");
@@ -20,6 +20,14 @@ function Signup( { setUserAccount, userEndpoint } ) {
 
             // api limitations mean existence of an id is a successful response 
             if( response.id ) {
+                // update localStorage
+                localStorage.setItem(userEndpoint, JSON.stringify(user) );
+                localStorage.setItem(cartEndpoint, JSON.stringify({
+                    id:0,
+                    userId:0,
+                    products:[]
+                })); // empty cart to begin shopping with
+
                 setSuccess("Account successfully created. Happy shopping!");
             } else {
                 setCreateError("Trouble creating account, please try again.");
@@ -58,6 +66,7 @@ function Signup( { setUserAccount, userEndpoint } ) {
 
         // validate required inputs
         const {validEmail, validPhone, validPassword} = validate( inputs );
+
         if( validEmail && validPhone && validPassword ) {
             // turn off help flags when successful inputs are received
             setShowEmailRequirements(false);

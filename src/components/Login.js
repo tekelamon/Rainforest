@@ -1,7 +1,7 @@
 import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
-function Login( { setUserAccount, userEndpoint, setUserCart, cartEndpoint } ) {
+function Login( { userEndpoint, cartEndpoint } ) {
     const [success, setSuccess] = useState("");
     const [loginFail, setLoginFail] = useState("");
 
@@ -18,12 +18,8 @@ function Login( { setUserAccount, userEndpoint, setUserCart, cartEndpoint } ) {
                 const cart = await getCart( matchedAccount.id );
 
                 // update localStorage to be used to find account on site visit
-                localStorage.setItem(userEndpoint, matchedAccount);
-                localStorage.setItem(cartEndpoint, cart);
-
-                // update user states for other components
-                setUserAccount( matchedAccount );
-                setUserCart( cart );
+                localStorage.setItem(userEndpoint, JSON.stringify(matchedAccount) );
+                localStorage.setItem(cartEndpoint, JSON.stringify(cart) );
 
                 // update user on UI
                 setSuccess(`Logged in successfully, welcome ${matchedAccount.name.firstname}`);
@@ -57,8 +53,8 @@ function Login( { setUserAccount, userEndpoint, setUserCart, cartEndpoint } ) {
 
     return (
         <div id="loginFormContainer">
-            { success && <p>{success}</p>}
-            { loginFail && <p>{loginFail}</p>}
+            { success && <p>{success}</p> }
+            { loginFail && <p>{loginFail}</p> }
             <form id="loginForm" onSubmit={event => handleSubmit(event) } >
                 <label className="loginFormText" htmlFor="username" >Username: </label>
                 <input id="username" name="username" className="loginFormInput" />
