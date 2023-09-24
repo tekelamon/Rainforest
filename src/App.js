@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -16,10 +15,7 @@ import Signup from './components/Signup';           // signup page
 function App() {
   // check localStorage for user sign in
   const USERACC = "rainforestUserAccount";
-  const [userAccount, setUserAccount] = useState( localStorage.getItem(`${USERACC}`) );
-
   const USERCART = "rainforestUserCart";
-  const [userCart, setUserCart] = useState( localStorage.getItem(`${USERCART}`) );
 
   return (
     <div className="App">
@@ -29,20 +25,20 @@ function App() {
           <Route element={<Navigation />} path='/' >
             <Route index element={
               <Products
-                userAccount={userAccount}
+                userEndpoint={USERACC}
                 cartEndpoint={USERCART}
               />}
             />
             <Route element={
               <ProductDetails
-                userAccount={userAccount}
+                userEndpoint={USERACC}
                 cartEndpoint={USERCART}
               />} 
               path='/product/:id'
             />
             <Route element={
               <Cart
-                userAccount={userAccount}
+                userEndpoint={USERACC}
                 cartEndpoint={USERCART}
               />}
               path='/cart'
@@ -51,17 +47,15 @@ function App() {
 
           <Route element={
             <Login
-              setUserAccount={setUserAccount}
               userEndpoint={USERACC}
-              setUserCart={setUserCart}
               cartEndpoint={USERCART}
             />}
             path='/login'
           />
           <Route element={
             <Signup
-              setUserAccount={setUserAccount}
               userEndpoint={USERACC}
+              cartEndpoint={USERCART}
             />}
             path='/signup'
           />
