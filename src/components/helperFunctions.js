@@ -25,15 +25,8 @@ const filterProducts = ( products, searchCriteria ) => {
     return foundProducts;
 };
 
-// TODO resolve vvvvv
-
-// add to cart was working when used in Product.js
-// now that function has moved here, currentCart is returning undefined
-// stops all add to cart functionality
-
 const addtoCart = ( id, cartEndpoint, currentCart, setCurrentCart ) => {
     // check if item is already in cart
-    console.log( currentCart );
     const isInCart = currentCart.findIndex( item => item.productId === id );
     // -1 means no matches, so
     // if item is not in cart, add item to cart
