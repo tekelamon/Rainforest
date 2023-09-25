@@ -7,7 +7,15 @@ function Cart( { userEndpoint, cartEndpoint } ) {
     return (
         <div id="cart-container">
             <h2>Cart</h2>
-            { productsInCart.map( product => <CartContent key={product.productId} product={product} /> ) }
+            {
+                productsInCart.map( product =>
+                    <CartContent
+                        key={product.productId}
+                        product={product}
+                        cartEndpoint={cartEndpoint}
+                    />
+                )
+            }
         </div>
     );
 }
