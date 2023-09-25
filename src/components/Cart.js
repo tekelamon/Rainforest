@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CartContent from "./CartContent";
 
 function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {

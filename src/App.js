@@ -38,12 +38,16 @@ function App() {
               <Products
                 userEndpoint={USERACC}
                 cartEndpoint={USERCART}
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
               />}
             />
             <Route element={
               <ProductDetails
                 userEndpoint={USERACC}
                 cartEndpoint={USERCART}
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
               />} 
               path='/product/:id'
             />
