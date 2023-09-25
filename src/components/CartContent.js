@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { getProductById } from "./api-services";
+import ReactModal from "react-modal";
 
 function CartContent( {product, cartEndpoint, setCurrentCart} ) {
     const [productInfo, setProductInfo] = useState({});
     const [quantity, setQuantity] = useState( product.quantity );
+
+    const [confirmDelete, setConfirmDelete] = useState(false);
 
     // get all cart data
     let cart = JSON.parse( localStorage.getItem(cartEndpoint) );
@@ -25,7 +28,15 @@ function CartContent( {product, cartEndpoint, setCurrentCart} ) {
     const updateQuantity = ( operation ) => {
         // update quantities
         if( operation === "+" ) { items[index].quantity++; }
-        if( operation === "-" ) { items[index].quantity--; }
+        if( operation === "-" ) {
+            items[index].quantity--;
+            // do not allow quantity to become less than 1, remove from cart instead
+            if( items[index].quantity < 1 ) {
+                items[index].quantity++;
+                // ask if user wants to remove from cart
+                setConfirmDelete(true);
+            }
+        }
 
         setQuantity( items[index].quantity );
 
@@ -50,12 +61,22 @@ function CartContent( {product, cartEndpoint, setCurrentCart} ) {
             <p>{ productInfo.title }</p>
             <p>{ productInfo.price }</p>
             <div className="productQuantity">
-                <button onClick={()=>removeFromCart()}>Delete</button>
+                <button onClick={()=>setConfirmDelete(true)}>Delete</button>
                 <button onClick={()=>updateQuantity("-")}>-</button>
                 <p>{ quantity }</p>
                 <button onClick={()=>updateQuantity("+")}>+</button>
             </div>
             <p>Total: { productInfo.price * quantity }</p>
+            <ReactModal
+                isOpen={confirmDelete}
+                ariaHideApp={false}
+            >
+                <div id="confirmDelete">
+                    <p>Do you want to remove "{productInfo.title}" from your cart?</p>
+                    <button onClick={()=>setConfirmDelete(false)}>No</button>
+                    <button onClick={()=>removeFromCart()}>Yes</button>
+                </div>
+            </ReactModal>
         </div>
     );
 }
