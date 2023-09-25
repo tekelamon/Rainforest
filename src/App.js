@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -16,6 +17,16 @@ function App() {
   // check localStorage for user sign in
   const USERACC = "rainforestUserAccount";
   const USERCART = "rainforestUserCart";
+
+  // either returns object or null
+  let productsInCart = localStorage.getItem(USERCART);
+  // if there is a cart saved in localStorage, update cart to hold object instead of string
+  if( productsInCart ) {
+    // get the data at the cart endpoint, parse to object, then retrieve product info
+    productsInCart = JSON.parse( localStorage.getItem(USERCART) ).products;
+  }
+
+  const [currentCart, setCurrentCart] = useState(productsInCart);
 
   return (
     <div className="App">
@@ -40,6 +51,8 @@ function App() {
               <Cart
                 userEndpoint={USERACC}
                 cartEndpoint={USERCART}
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
               />}
               path='/cart'
             />

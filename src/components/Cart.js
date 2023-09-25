@@ -1,12 +1,7 @@
 import { useState } from "react";
 import CartContent from "./CartContent";
 
-function Cart( { userEndpoint, cartEndpoint } ) {
-    // get the data at the cart endpoint, parse to object, then retrieve product info
-    const productsInCart = JSON.parse( localStorage.getItem(cartEndpoint) ).products;
-
-    const [currentCart, setCurrentCart] = useState(productsInCart);
-
+function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
     return (
         <div id="cart-container">
             <h2>Cart</h2>
