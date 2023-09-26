@@ -43,6 +43,7 @@ function CartContent( {product, cartEndpoint, setCurrentCart} ) {
         // update carts
         cart.products = items;
         localStorage.setItem( cartEndpoint, JSON.stringify( cart ) );
+        setCurrentCart( cart.products );
     };
 
     const removeFromCart = () => {
