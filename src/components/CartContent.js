@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getProductById } from "./api-services";
 import ReactModal from "react-modal";
 
-function CartContent( {product, cartEndpoint, setCurrentCart} ) {
+function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart, subtotals, setSubtotals, updateDisplay } ) {
     const [productInfo, setProductInfo] = useState({});
     const [quantity, setQuantity] = useState( product.quantity );
 
@@ -19,8 +19,15 @@ function CartContent( {product, cartEndpoint, setCurrentCart} ) {
 
     useEffect(()=>{
         const getProductInfo = async () => {
+            // get product info from api
             const response = await getProductById( product.productId );
+            // update product info
             setProductInfo( response );
+            // update total for cart component now that price is found
+            let newTotals = subtotals;
+            newTotals[indexInSubtotals] = product.quantity * response.price;
+            setSubtotals( newTotals );
+            updateDisplay();
         };
         getProductInfo();
     },[]);
@@ -38,7 +45,14 @@ function CartContent( {product, cartEndpoint, setCurrentCart} ) {
             }
         }
 
+        // used to render in this component
         setQuantity( items[index].quantity );
+
+        // update subtotal in cart component
+        let newTotals = subtotals;
+        newTotals[indexInSubtotals] = items[index].quantity * productInfo.price;
+        setSubtotals( newTotals );
+        updateDisplay();
 
         // update carts
         cart.products = items;
