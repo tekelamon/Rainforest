@@ -1,7 +1,7 @@
 import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
-function Login( { userEndpoint, cartEndpoint } ) {
+function Login( { userEndpoint, cartEndpoint, setCurrentCart } ) {
     const [success, setSuccess] = useState("");
     const [loginFail, setLoginFail] = useState("");
 
@@ -20,6 +20,8 @@ function Login( { userEndpoint, cartEndpoint } ) {
                 // update localStorage to be used to find account on site visit
                 localStorage.setItem(userEndpoint, JSON.stringify(matchedAccount) );
                 localStorage.setItem(cartEndpoint, JSON.stringify(cart) );
+
+                setCurrentCart( cart.products );
 
                 // update user on UI
                 setSuccess(`Logged in successfully, welcome ${matchedAccount.name.firstname}`);

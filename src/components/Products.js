@@ -4,10 +4,10 @@ import {
     getAllProducts,
     getProductsByCategory,
     getAllCategories } from "./api-services";
-import { filterProducts } from "./productFilters";
+import { filterProducts } from "./helperFunctions";
 
 // display all products returned from api in card elements
-function Products( { userAccount } ) {
+function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
     const [allProducts, setAllProducts] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
 
@@ -79,8 +79,16 @@ function Products( { userAccount } ) {
                 categoryButtons
             }
             {
-                (filteredProducts.length !== 0) ?  (
-                    filteredProducts.map( product => <Product product={product} key={product.id} /> )
+                ( filteredProducts.length !== 0 ) ? (
+                    filteredProducts.map( product =>
+                        <Product
+                            product={product}
+                            key={product.id}
+                            cartEndpoint={cartEndpoint}
+                            currentCart={currentCart}
+                            setCurrentCart={setCurrentCart}
+                        />
+                    )
                 ) : (
                     noProductsFound
                 )

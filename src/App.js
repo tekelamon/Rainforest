@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -10,12 +11,23 @@ import Cart from './components/Cart';               // entire cart
 
 import Login from './components/Login';             // login page
 import Signup from './components/Signup';           // signup page
+import CheckoutComplete from "./components/CheckoutComplete";
 
 
 function App() {
   // check localStorage for user sign in
   const USERACC = "rainforestUserAccount";
   const USERCART = "rainforestUserCart";
+
+  // either returns object or null
+  let productsInCart = localStorage.getItem(USERCART);
+  // if there is a cart saved in localStorage, update cart to hold object instead of string
+  if( productsInCart ) {
+    // get the data at the cart endpoint, parse to object, then retrieve product info
+    productsInCart = JSON.parse( localStorage.getItem(USERCART) ).products;
+  }
+
+  const [currentCart, setCurrentCart] = useState(productsInCart);
 
   return (
     <div className="App">
@@ -27,12 +39,16 @@ function App() {
               <Products
                 userEndpoint={USERACC}
                 cartEndpoint={USERCART}
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
               />}
             />
             <Route element={
               <ProductDetails
                 userEndpoint={USERACC}
                 cartEndpoint={USERCART}
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
               />} 
               path='/product/:id'
             />
@@ -40,15 +56,19 @@ function App() {
               <Cart
                 userEndpoint={USERACC}
                 cartEndpoint={USERCART}
+                currentCart={currentCart}
+                setCurrentCart={setCurrentCart}
               />}
               path='/cart'
             />
+            <Route element={<CheckoutComplete />} path="/checkout-complete" />
           </Route>
 
           <Route element={
             <Login
               userEndpoint={USERACC}
               cartEndpoint={USERCART}
+              setCurrentCart={setCurrentCart}
             />}
             path='/login'
           />
@@ -56,6 +76,7 @@ function App() {
             <Signup
               userEndpoint={USERACC}
               cartEndpoint={USERCART}
+              setCurrentCart={setCurrentCart}
             />}
             path='/signup'
           />

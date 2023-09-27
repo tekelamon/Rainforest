@@ -3,7 +3,7 @@ import { FormText, validate } from "./signupFormHelpers";
 import { useState, useEffect } from "react";
 import { createUser } from "./api-services";
 
-function Signup( { userEndpoint, cartEndpoint } ) {
+function Signup( { userEndpoint, cartEndpoint, setCurrentCart } ) {
     const [user, setUser] = useState(null);
     const [success, setSuccess] = useState("");
     const [createError, setCreateError] = useState("");
@@ -27,6 +27,8 @@ function Signup( { userEndpoint, cartEndpoint } ) {
                     userId:0,
                     products:[]
                 })); // empty cart to begin shopping with
+
+                setCurrentCart([]);
 
                 setSuccess("Account successfully created. Happy shopping!");
             } else {
