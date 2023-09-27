@@ -66,6 +66,7 @@ function App() {
             <Login
               userEndpoint={USERACC}
               cartEndpoint={USERCART}
+              setCurrentCart={setCurrentCart}
             />}
             path='/login'
           />
@@ -73,6 +74,7 @@ function App() {
             <Signup
               userEndpoint={USERACC}
               cartEndpoint={USERCART}
+              setCurrentCart={setCurrentCart}
             />}
             path='/signup'
           />
