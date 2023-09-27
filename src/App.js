@@ -11,6 +11,7 @@ import Cart from './components/Cart';               // entire cart
 
 import Login from './components/Login';             // login page
 import Signup from './components/Signup';           // signup page
+import CheckoutComplete from "./components/CheckoutComplete";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
               />}
               path='/cart'
             />
+            <Route element={<CheckoutComplete />} path="/checkout-complete" />
           </Route>
 
           <Route element={

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CartContent from "./CartContent";
 
 function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
@@ -8,6 +9,11 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
 
     const updateDisplay = () => {
         setDisplayTotal( subtotals.reduce((a,b)=>a+b) );
+    };
+
+    const navigate = useNavigate();
+    const completeCheckout = () => {
+        navigate("../checkout-complete");
     };
 
     return (
@@ -29,6 +35,7 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
             }
             <div>
                 Total: { displayTotal }
+                <button onClick={()=>completeCheckout()}>Checkout</button>
             </div>
         </div>
     );
