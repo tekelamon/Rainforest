@@ -14,6 +14,8 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
     const [category, setCategory] = useState(null);
     const [searchCriteria, setSearchCriteria] = useState('');
 
+    const [sortOrder, setSortOrder] = useState(false);
+
     // get categories from api
     useEffect(()=>{
         const getCategories = async () => {
@@ -28,14 +30,16 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
         const getData = async () => {
             if ( category ) {
                 const response = await getProductsByCategory( category );
+                if( sortOrder ) { response.reverse() };
                 setAllProducts( response );
             } else {
                 const response = await getAllProducts();
+                if( sortOrder ) { response.reverse() };
                 setAllProducts( response );
             }
         }
         getData();
-    },[category]);
+    },[category, sortOrder]);
 
     // filter for text input
     const filteredProducts = filterProducts( allProducts, searchCriteria );
@@ -64,20 +68,38 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
 
     return (
         <div id="all-products-container">
-            <input id="searchCriteria"
-                type="text"
-                onChange={ e => setSearchCriteria(e.target.value) }
-            />
-            <input type="radio"
-                   id="allbtn"
-                   name="category"
-                   value="All"
-                   onClick={()=>setCategory(null)}
-            />
-            <label htmlFor="allbtn">ALL</label>
-            {
-                categoryButtons
-            }
+            <div id="products-page-inputs" >
+                <input id="searchCriteria"
+                    type="text"
+                    onChange={ e => setSearchCriteria(e.target.value) }
+                />
+                <input type="radio"
+                    id="allbtn"
+                    name="category"
+                    value="All"
+                    onClick={()=>setCategory(null)}
+                />
+                <label htmlFor="allbtn">ALL</label>
+                {
+                    categoryButtons
+                }
+                <input type="radio"
+                    id="sortasc"
+                    name="sorter"
+                    value="ascending"
+                    onClick={()=>setSortOrder(false)}
+                    defaultChecked
+                />
+                <label htmlFor="sortasc" >Ascending</label>
+                <input type="radio"
+                    id="sortdesc"
+                    name="sorter"
+                    value="descending"
+                    onClick={()=>setSortOrder(true)}
+                />
+                <label htmlFor="sortdesc" >Descending</label>
+            </div>
+            <div id="all-products-cards" >
             {
                 ( filteredProducts.length !== 0 ) ? (
                     filteredProducts.map( product =>
@@ -93,6 +115,7 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
                     noProductsFound
                 )
             }
+            </div>
         </div>
     );
 }
