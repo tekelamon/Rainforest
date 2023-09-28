@@ -62,7 +62,7 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
     // control for category search 
     const categoryButtons = allCategories.map( currentCategory => {
         return (
-            <option value={currentCategory} >{currentCategory.toUpperCase()}</option>
+            <option key={currentCategory} value={currentCategory} >{currentCategory.toUpperCase()}</option>
         )
     })
 
@@ -71,6 +71,7 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
             <div id="products-page-inputs" >
                 <input id="searchCriteria"
                     type="text"
+                    placeholder="Search"
                     onChange={ e => setSearchCriteria(e.target.value) }
                 />
                 <select name="category" id="category" defaultValue="" onChange={e=>setCategory(e.target.value)} >
