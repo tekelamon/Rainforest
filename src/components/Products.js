@@ -16,10 +16,14 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
 
     const [sortOrder, setSortOrder] = useState(false);
 
+    const [fail, setFail] = useState(false);
+
     // get categories from api
     useEffect(()=>{
         const getCategories = async () => {
             const response = await getAllCategories();
+            // if api request fails, update fail state and stop execution of function
+            if( !response ) { setFail(true); return; }
             setAllCategories( response );
         }
         getCategories();
@@ -30,10 +34,14 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
         const getData = async () => {
             if ( category ) {
                 const response = await getProductsByCategory( category );
+                // if api request fails, update fail state and stop execution of function
+                if( !response ) { setFail(true); return; }
                 if( sortOrder ) { response.reverse() };
                 setAllProducts( response );
             } else {
                 const response = await getAllProducts();
+                // if api request fails, update fail state and stop execution of function
+                if( !response ) { setFail(true); return; }
                 if( sortOrder ) { response.reverse() };
                 setAllProducts( response );
             }
@@ -66,7 +74,7 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
         )
     })
 
-    return (
+    return (!fail) ? (
         <div id="all-products-container">
             <div id="products-page-inputs" >
                 <input id="searchCriteria"
@@ -116,6 +124,10 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
                 )
             }
             </div>
+        </div>
+    ) : (
+        <div id="all-products-container">
+            <p>We're having troubling communicating with our servers...</p>
         </div>
     );
 }

@@ -7,8 +7,16 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
     const [subtotals, setSubtotals] = useState( Array(currentCart.length).fill(0) );
     const [displayTotal, setDisplayTotal] = useState(0);
 
+    const [fail, setFail] = useState(false);
+
     const updateDisplay = () => {
-        setDisplayTotal( subtotals.reduce((a,b)=>a+b) );
+        try {
+            setDisplayTotal( subtotals.reduce((a,b)=>a+b) );
+        } catch {
+            setFail(true);
+            setDisplayTotal(0);
+            return;
+        }
     };
 
     const navigate = useNavigate();
@@ -16,7 +24,7 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
         navigate("../checkout-complete");
     };
 
-    return (
+    return (!fail) ? (
         <div id="cart-container">
             <h2>Cart</h2>
             {
@@ -37,6 +45,10 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
                 Total: { displayTotal }
                 <button onClick={()=>completeCheckout()}>Checkout</button>
             </div>
+        </div>
+    ) : (
+        <div id="cart-container">
+            <p>Issues generating cart</p>
         </div>
     );
 }
