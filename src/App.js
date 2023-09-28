@@ -25,6 +25,15 @@ function App() {
   if( productsInCart ) {
     // get the data at the cart endpoint, parse to object, then retrieve product info
     productsInCart = JSON.parse( localStorage.getItem(USERCART) ).products;
+  } else {
+    const templateCart = {
+      id: 0,
+      userId: 0,
+      date:"",
+      products:[]
+    };
+    productsInCart = templateCart.products;
+    localStorage.setItem( USERCART, JSON.stringify(templateCart) );
   }
 
   const [currentCart, setCurrentCart] = useState(productsInCart);
