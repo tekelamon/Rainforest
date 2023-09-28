@@ -62,15 +62,7 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
     // control for category search 
     const categoryButtons = allCategories.map( currentCategory => {
         return (
-            <div key={currentCategory}>
-                <input type="radio"
-                    id={currentCategory}
-                    name="category"
-                    value={currentCategory}
-                    onClick={()=>setCategory(currentCategory)}
-                />
-                <label htmlFor={currentCategory}>{currentCategory.toUpperCase()}</label>
-            </div>
+            <option value={currentCategory} >{currentCategory.toUpperCase()}</option>
         )
     })
 
@@ -81,16 +73,12 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
                     type="text"
                     onChange={ e => setSearchCriteria(e.target.value) }
                 />
-                <input type="radio"
-                    id="allbtn"
-                    name="category"
-                    value="All"
-                    onClick={()=>setCategory(null)}
-                />
-                <label htmlFor="allbtn">ALL</label>
-                {
-                    categoryButtons
-                }
+                <select name="category" id="category" defaultValue="" onChange={e=>setCategory(e.target.value)} >
+                    <option value="" >ALL</option>
+                    {
+                        categoryButtons
+                    }
+                </select>
                 <input type="radio"
                     id="sortasc"
                     name="sorter"
