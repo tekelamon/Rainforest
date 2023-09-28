@@ -16,9 +16,19 @@
   margin: 1rem;
 }
 
+.product a {
+  text-decoration: none;
+  color: black;
+}
+
 .product-image {
   width: 12rem;
   height: 12rem;
+}
+
+button {
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
 nav {
