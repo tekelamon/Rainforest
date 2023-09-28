@@ -79,21 +79,7 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
                         categoryButtons
                     }
                 </select>
-                <input type="radio"
-                    id="sortasc"
-                    name="sorter"
-                    value="ascending"
-                    onClick={()=>setSortOrder(false)}
-                    defaultChecked
-                />
-                <label htmlFor="sortasc" >Ascending</label>
-                <input type="radio"
-                    id="sortdesc"
-                    name="sorter"
-                    value="descending"
-                    onClick={()=>setSortOrder(true)}
-                />
-                <label htmlFor="sortdesc" >Descending</label>
+                <button onClick={()=>setSortOrder(!sortOrder)}>{sortOrder ? "Descending" : "Ascending"}</button>
             </div>
             <div id="all-products-cards" >
             {
