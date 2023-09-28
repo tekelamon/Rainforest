@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addtoCart } from "./helperFunctions";
 import ReactModal from "react-modal";
 import { useState } from "react";
@@ -9,6 +9,8 @@ function Product( { product:{id, title, image, price}, cartEndpoint, currentCart
         setShowAdded(true);
         setTimeout(()=>{setShowAdded(false)}, 850);
     };
+    
+    const navigate = useNavigate();
 
     // transform data to card element
     return (
@@ -16,7 +18,7 @@ function Product( { product:{id, title, image, price}, cartEndpoint, currentCart
             <h2 className="product-title">{title}</h2>
             <img className="product-image" src={image} alt="" />
             <p className="product-price">{price}</p>
-            <Link to={`/product/${id}`} >View Details</Link>
+            <button onClick={()=>navigate(`/product/${id}`)}>View Details</button>
             <button onClick={()=>{addtoCart( id, cartEndpoint, currentCart, setCurrentCart );popUp()}}>Add to cart</button>
             <ReactModal
                 isOpen={showAdded}

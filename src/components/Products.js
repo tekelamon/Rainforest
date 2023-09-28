@@ -14,10 +14,16 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
     const [category, setCategory] = useState(null);
     const [searchCriteria, setSearchCriteria] = useState('');
 
+    const [sortOrder, setSortOrder] = useState(false);
+
+    const [fail, setFail] = useState(false);
+
     // get categories from api
     useEffect(()=>{
         const getCategories = async () => {
             const response = await getAllCategories();
+            // if api request fails, update fail state and stop execution of function
+            if( !response ) { setFail(true); return; }
             setAllCategories( response );
         }
         getCategories();
@@ -28,14 +34,20 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
         const getData = async () => {
             if ( category ) {
                 const response = await getProductsByCategory( category );
+                // if api request fails, update fail state and stop execution of function
+                if( !response ) { setFail(true); return; }
+                if( sortOrder ) { response.reverse() };
                 setAllProducts( response );
             } else {
                 const response = await getAllProducts();
+                // if api request fails, update fail state and stop execution of function
+                if( !response ) { setFail(true); return; }
+                if( sortOrder ) { response.reverse() };
                 setAllProducts( response );
             }
         }
         getData();
-    },[category]);
+    },[category, sortOrder]);
 
     // filter for text input
     const filteredProducts = filterProducts( allProducts, searchCriteria );
@@ -50,34 +62,27 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
     // control for category search 
     const categoryButtons = allCategories.map( currentCategory => {
         return (
-            <div key={currentCategory}>
-                <input type="radio"
-                    id={currentCategory}
-                    name="category"
-                    value={currentCategory}
-                    onClick={()=>setCategory(currentCategory)}
-                />
-                <label htmlFor={currentCategory}>{currentCategory.toUpperCase()}</label>
-            </div>
+            <option key={currentCategory} value={currentCategory} >{currentCategory.toUpperCase()}</option>
         )
     })
 
-    return (
+    return (!fail) ? (
         <div id="all-products-container">
-            <input id="searchCriteria"
-                type="text"
-                onChange={ e => setSearchCriteria(e.target.value) }
-            />
-            <input type="radio"
-                   id="allbtn"
-                   name="category"
-                   value="All"
-                   onClick={()=>setCategory(null)}
-            />
-            <label htmlFor="allbtn">ALL</label>
-            {
-                categoryButtons
-            }
+            <div id="products-page-inputs" >
+                <input id="searchCriteria"
+                    type="text"
+                    placeholder="Search"
+                    onChange={ e => setSearchCriteria(e.target.value) }
+                />
+                <select name="category" id="category" defaultValue="" onChange={e=>setCategory(e.target.value)} >
+                    <option value="" >ALL</option>
+                    {
+                        categoryButtons
+                    }
+                </select>
+                <button onClick={()=>setSortOrder(!sortOrder)}>{sortOrder ? "Descending" : "Ascending"}</button>
+            </div>
+            <div id="all-products-cards" >
             {
                 ( filteredProducts.length !== 0 ) ? (
                     filteredProducts.map( product =>
@@ -93,6 +98,11 @@ function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } )
                     noProductsFound
                 )
             }
+            </div>
+        </div>
+    ) : (
+        <div id="all-products-container">
+            <p>We're having troubling communicating with our servers...</p>
         </div>
     );
 }

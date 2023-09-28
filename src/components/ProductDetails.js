@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "./api-services";
 import { useState, useEffect } from "react";
 import { addtoCart } from "./helperFunctions";
@@ -8,6 +8,8 @@ const ProductDetails = ( { userAccount, cartEndpoint, currentCart, setCurrentCar
 
     // get id of the individual product from the link passed in
     const passedProduct = useParams();
+
+    const navigate = useNavigate();
 
     // get data for product to display
     useEffect(()=>{
@@ -23,7 +25,7 @@ const ProductDetails = ( { userAccount, cartEndpoint, currentCart, setCurrentCar
         <h2 className="product-details-title">{product.title}</h2>
         <p className="product-details-price">{product.price}</p>
         <button onClick={()=>{addtoCart( product.id, cartEndpoint, currentCart, setCurrentCart )}}>Add to cart</button>
-        <Link to="/">Go Home</Link>
+        <button onClick={()=>navigate("/")} >Go Home</button>
     </div>
 }
 

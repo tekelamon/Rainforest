@@ -2,6 +2,7 @@ import { FormText, validate } from "./signupFormHelpers";
 
 import { useState, useEffect } from "react";
 import { createUser } from "./api-services";
+import { useNavigate } from "react-router-dom";
 
 function Signup( { userEndpoint, cartEndpoint, setCurrentCart } ) {
     const [user, setUser] = useState(null);
@@ -12,6 +13,8 @@ function Signup( { userEndpoint, cartEndpoint, setCurrentCart } ) {
     const [showEmailRequirements, setShowEmailRequirements ] = useState(false);
     const [showPhoneNumberRequirements , setShowPhoneNumberRequirements  ] = useState(false);
     const [showPasswordRequirements , setShowPasswordRequirements  ] = useState(false);
+
+    const navigate = useNavigate();
 
     // send user data to api for creation
     useEffect(()=>{
@@ -31,6 +34,9 @@ function Signup( { userEndpoint, cartEndpoint, setCurrentCart } ) {
                 setCurrentCart([]);
 
                 setSuccess("Account successfully created. Happy shopping!");
+
+                // after successful login, route user to home page
+                setTimeout(()=>navigate("/"),3000);
             } else {
                 setCreateError("Trouble creating account, please try again.");
             }

@@ -8,6 +8,8 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
 
     const [confirmDelete, setConfirmDelete] = useState(false);
 
+    const [fail, setFail] = useState(false);
+
     // get all cart data
     let cart = JSON.parse( localStorage.getItem(cartEndpoint) );
 
@@ -21,6 +23,8 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
         const getProductInfo = async () => {
             // get product info from api
             const response = await getProductById( product.productId );
+            // if api request fails, update fail state and stop execution of function
+            if( !response ) { setFail(true); return; }
             // update product info
             setProductInfo( response );
             // update total for cart component now that price is found
@@ -70,7 +74,7 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
         setCurrentCart( cart.products );
     };
 
-    return (
+    return (!fail) ? (
         <div className="cart-content">
             <img src={productInfo.image} alt={productInfo.description} />
             <p>{ productInfo.title }</p>
@@ -92,6 +96,10 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
                     <button onClick={()=>removeFromCart()}>Yes</button>
                 </div>
             </ReactModal>
+        </div>
+    ) : (
+        <div className="cart-content">
+            <p>Trouble getting this product's info</p>
         </div>
     );
 }

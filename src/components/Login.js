@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
@@ -7,6 +8,7 @@ function Login( { userEndpoint, cartEndpoint, setCurrentCart } ) {
 
     const [inputs, setInputs] = useState(null);
 
+    const navigate = useNavigate();
     useEffect(()=>{
         const attemptLogin = async () => {
             const response = await loginUser( inputs );
@@ -25,6 +27,9 @@ function Login( { userEndpoint, cartEndpoint, setCurrentCart } ) {
 
                 // update user on UI
                 setSuccess(`Logged in successfully, welcome ${matchedAccount.name.firstname}`);
+
+                // after successful login, route user to home page
+                setTimeout(()=>navigate("/"),3000);
             } else {
                 // login failed
                 setLoginFail("Incorrect username or password");
