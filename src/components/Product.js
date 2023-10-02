@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addtoCart } from "./helperFunctions";
 import ReactModal from "react-modal";
 import { useState } from "react";

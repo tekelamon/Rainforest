@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CartContent from "./CartContent";
 
-function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
+function Cart( { cartEndpoint, currentCart, setCurrentCart } ) {
     // create an array with space for each product in cart
     const [subtotals, setSubtotals] = useState( Array(currentCart.length).fill(0) );
     const [displayTotal, setDisplayTotal] = useState(0);

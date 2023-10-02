@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from "react-router-dom";
 import { loginUser, getAllUsers, getCart } from "./api-services";
 import { useEffect, useState } from "react";
 
-function Login( { userEndpoint, cartEndpoint, setCurrentCart } ) {
+function Login( { cartEndpoint, setCurrentCart } ) {
     const [success, setSuccess] = useState("");
     const [loginFail, setLoginFail] = useState("");
 
@@ -20,7 +21,6 @@ function Login( { userEndpoint, cartEndpoint, setCurrentCart } ) {
                 const cart = await getCart( matchedAccount.id );
 
                 // update localStorage to be used to find account on site visit
-                localStorage.setItem(userEndpoint, JSON.stringify(matchedAccount) );
                 localStorage.setItem(cartEndpoint, JSON.stringify(cart) );
 
                 setCurrentCart( cart.products );
