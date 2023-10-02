@@ -23,6 +23,12 @@ function Product( { product:{id, title, image, price}, cartEndpoint, currentCart
             <ReactModal
                 isOpen={showAdded}
                 ariaHideApp={false}
+                style={{ content: {
+                    top: '20%',
+                    left: '15%',
+                    right: '15%',
+                    bottom: '20%'
+                }}}
             >
                 <div id="addToCartUpdate">
                     <p>{title} was added to cart</p>

@@ -59,7 +59,7 @@ function Login( { cartEndpoint, setCurrentCart } ) {
     };
 
     return (
-        <div id="loginFormContainer">
+        <div id="loginForm-container">
             { success && <p>{success}</p> }
             { loginFail && <p>{loginFail}</p> }
             <form id="loginForm" onSubmit={event => handleSubmit(event) } >
@@ -69,7 +69,7 @@ function Login( { cartEndpoint, setCurrentCart } ) {
                 <label className="loginFormText" htmlFor="password" >Password: </label>
                 <input id="password" name="password" className="loginFormInput" />
 
-                <input type="submit" id="loginFormSubmit" value="Login" />
+                <button type="submit">Login</button>
             </form>
         </div>
     )

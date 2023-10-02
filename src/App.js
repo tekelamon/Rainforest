@@ -67,22 +67,21 @@ function App() {
               path='/cart'
             />
             <Route element={<CheckoutComplete />} path="/checkout-complete" />
-          </Route>
-
-          <Route element={
-            <Login
-              cartEndpoint={USERCART}
-              setCurrentCart={setCurrentCart}
-            />}
-            path='/login'
-          />
-          <Route element={
-            <Signup
-              cartEndpoint={USERCART}
-              setCurrentCart={setCurrentCart}
-            />}
-            path='/signup'
-          />
+            <Route element={
+              <Login
+                cartEndpoint={USERCART}
+                setCurrentCart={setCurrentCart}
+              />}
+              path='/login'
+            />
+            <Route element={
+              <Signup
+                cartEndpoint={USERCART}
+                setCurrentCart={setCurrentCart}
+              />}
+              path='/signup'
+            />
+            </Route>
         </Routes>
       </BrowserRouter>
     </div>

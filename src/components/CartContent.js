@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { getProductById } from "./api-services";
 import ReactModal from "react-modal";
@@ -79,7 +80,7 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
             <img src={productInfo.image} alt={productInfo.description} />
             <p>{ productInfo.title }</p>
             <p>{ productInfo.price }</p>
-            <div className="productQuantity">
+            <div className="product-quantity">
                 <button onClick={()=>setConfirmDelete(true)}>Delete</button>
                 <button onClick={()=>updateQuantity("-")}>-</button>
                 <p>{ quantity }</p>
@@ -89,6 +90,12 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
             <ReactModal
                 isOpen={confirmDelete}
                 ariaHideApp={false}
+                style={{ content: {
+                    top: '20%',
+                    left: '15%',
+                    right: '15%',
+                    bottom: '20%'
+                }}}
             >
                 <div id="confirmDelete">
                     <p>Do you want to remove "{productInfo.title}" from your cart?</p>
