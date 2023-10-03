@@ -117,3 +117,9 @@ form > * {
 .product-details-price {
   color: gray;
 }
+
+.confirmDelete-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

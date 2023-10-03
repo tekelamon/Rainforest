@@ -27,7 +27,10 @@ function Product( { product:{id, title, image, price}, cartEndpoint, currentCart
                     top: '20%',
                     left: '15%',
                     right: '15%',
-                    bottom: '20%'
+                    bottom: '20%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}}
             >
                 <div id="addToCartUpdate">

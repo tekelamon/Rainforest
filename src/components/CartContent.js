@@ -96,13 +96,18 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
                     top: '20%',
                     left: '15%',
                     right: '15%',
-                    bottom: '20%'
+                    bottom: '20%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}}
             >
-                <div id="confirmDelete">
+                <div className="confirmDelete">
                     <p>Do you want to remove "{productInfo.title}" from your cart?</p>
-                    <button onClick={()=>setConfirmDelete(false)}>No</button>
-                    <button onClick={()=>removeFromCart()}>Yes</button>
+                    <div className="confirmDelete-buttons">
+                        <button onClick={()=>setConfirmDelete(false)}>No</button>
+                        <button onClick={()=>removeFromCart()}>Yes</button>
+                    </div>
                 </div>
             </ReactModal>
         </div>
