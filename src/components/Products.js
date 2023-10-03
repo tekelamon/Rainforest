@@ -7,7 +7,7 @@ import {
 import { filterProducts } from "./helperFunctions";
 
 // display all products returned from api in card elements
-function Products( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
+function Products( { cartEndpoint, currentCart, setCurrentCart } ) {
     const [allProducts, setAllProducts] = useState([]);
     const [allCategories, setAllCategories] = useState([]);
 

@@ -129,7 +129,7 @@ const FormText = ( {makeUser} ) => {
                 maxLength={MAX_LENGTH}
             />
 
-            <input id="signupFormSubmit" type="submit" value="Submit" />
+            <button type="submit">Submit</button>
         </form>
     )
 };

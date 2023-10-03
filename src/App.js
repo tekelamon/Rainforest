@@ -15,8 +15,7 @@ import CheckoutComplete from "./components/CheckoutComplete";
 
 
 function App() {
-  // check localStorage for user sign in
-  const USERACC = "rainforestUserAccount";
+  // check localStorage for user cart
   const USERCART = "rainforestUserCart";
 
   // either returns object or null
@@ -46,7 +45,6 @@ function App() {
           <Route element={<Navigation />} path='/' >
             <Route index element={
               <Products
-                userEndpoint={USERACC}
                 cartEndpoint={USERCART}
                 currentCart={currentCart}
                 setCurrentCart={setCurrentCart}
@@ -54,7 +52,6 @@ function App() {
             />
             <Route element={
               <ProductDetails
-                userEndpoint={USERACC}
                 cartEndpoint={USERCART}
                 currentCart={currentCart}
                 setCurrentCart={setCurrentCart}
@@ -63,7 +60,6 @@ function App() {
             />
             <Route element={
               <Cart
-                userEndpoint={USERACC}
                 cartEndpoint={USERCART}
                 currentCart={currentCart}
                 setCurrentCart={setCurrentCart}
@@ -71,24 +67,21 @@ function App() {
               path='/cart'
             />
             <Route element={<CheckoutComplete />} path="/checkout-complete" />
-          </Route>
-
-          <Route element={
-            <Login
-              userEndpoint={USERACC}
-              cartEndpoint={USERCART}
-              setCurrentCart={setCurrentCart}
-            />}
-            path='/login'
-          />
-          <Route element={
-            <Signup
-              userEndpoint={USERACC}
-              cartEndpoint={USERCART}
-              setCurrentCart={setCurrentCart}
-            />}
-            path='/signup'
-          />
+            <Route element={
+              <Login
+                cartEndpoint={USERCART}
+                setCurrentCart={setCurrentCart}
+              />}
+              path='/login'
+            />
+            <Route element={
+              <Signup
+                cartEndpoint={USERCART}
+                setCurrentCart={setCurrentCart}
+              />}
+              path='/signup'
+            />
+            </Route>
         </Routes>
       </BrowserRouter>
     </div>

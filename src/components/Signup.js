@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { FormText, validate } from "./signupFormHelpers";
 
 import { useState, useEffect } from "react";
 import { createUser } from "./api-services";
 import { useNavigate } from "react-router-dom";
 
-function Signup( { userEndpoint, cartEndpoint, setCurrentCart } ) {
+function Signup( { cartEndpoint, setCurrentCart } ) {
     const [user, setUser] = useState(null);
     const [success, setSuccess] = useState("");
     const [createError, setCreateError] = useState("");
@@ -24,7 +25,6 @@ function Signup( { userEndpoint, cartEndpoint, setCurrentCart } ) {
             // api limitations mean existence of an id is a successful response 
             if( response.id ) {
                 // update localStorage
-                localStorage.setItem(userEndpoint, JSON.stringify(user) );
                 localStorage.setItem(cartEndpoint, JSON.stringify({
                     id:0,
                     userId:0,

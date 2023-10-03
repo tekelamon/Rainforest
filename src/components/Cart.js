@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CartContent from "./CartContent";
 
-function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
+function Cart( { cartEndpoint, currentCart, setCurrentCart } ) {
     // create an array with space for each product in cart
     const [subtotals, setSubtotals] = useState( Array(currentCart.length).fill(0) );
     const [displayTotal, setDisplayTotal] = useState(0);
@@ -11,7 +11,7 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
 
     const updateDisplay = () => {
         try {
-            setDisplayTotal( subtotals.reduce((a,b)=>a+b) );
+            setDisplayTotal( (subtotals.reduce((a,b)=>a+b)).toFixed(2) );
         } catch {
             setFail(true);
             setDisplayTotal(0);
@@ -42,7 +42,7 @@ function Cart( { userEndpoint, cartEndpoint, currentCart, setCurrentCart } ) {
                 )
             }
             <div>
-                Total: { displayTotal }
+                Total: ${ displayTotal }
                 <button onClick={()=>completeCheckout()}>Checkout</button>
             </div>
         </div>

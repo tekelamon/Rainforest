@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { getProductById } from "./api-services";
 import ReactModal from "react-modal";
@@ -72,28 +73,41 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
         cart.products = items;
         localStorage.setItem( cartEndpoint, JSON.stringify( cart ) );
         setCurrentCart( cart.products );
+        setConfirmDelete( false );
+        window.location.reload(false);
     };
 
     return (!fail) ? (
         <div className="cart-content">
             <img src={productInfo.image} alt={productInfo.description} />
             <p>{ productInfo.title }</p>
-            <p>{ productInfo.price }</p>
-            <div className="productQuantity">
+            <p>${ productInfo.price }</p>
+            <div className="product-quantity">
                 <button onClick={()=>setConfirmDelete(true)}>Delete</button>
                 <button onClick={()=>updateQuantity("-")}>-</button>
                 <p>{ quantity }</p>
                 <button onClick={()=>updateQuantity("+")}>+</button>
             </div>
-            <p>Total: { productInfo.price * quantity }</p>
+            <p>Total: ${ (productInfo.price * quantity).toFixed(2) }</p>
             <ReactModal
                 isOpen={confirmDelete}
                 ariaHideApp={false}
+                style={{ content: {
+                    top: '20%',
+                    left: '15%',
+                    right: '15%',
+                    bottom: '20%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}}
             >
-                <div id="confirmDelete">
+                <div className="confirmDelete">
                     <p>Do you want to remove "{productInfo.title}" from your cart?</p>
-                    <button onClick={()=>setConfirmDelete(false)}>No</button>
-                    <button onClick={()=>removeFromCart()}>Yes</button>
+                    <div className="confirmDelete-buttons">
+                        <button onClick={()=>setConfirmDelete(false)}>No</button>
+                        <button onClick={()=>removeFromCart()}>Yes</button>
+                    </div>
                 </div>
             </ReactModal>
         </div>
