@@ -81,14 +81,14 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
         <div className="cart-content">
             <img src={productInfo.image} alt={productInfo.description} />
             <p>{ productInfo.title }</p>
-            <p>{ productInfo.price }</p>
+            <p>${ productInfo.price }</p>
             <div className="product-quantity">
                 <button onClick={()=>setConfirmDelete(true)}>Delete</button>
                 <button onClick={()=>updateQuantity("-")}>-</button>
                 <p>{ quantity }</p>
                 <button onClick={()=>updateQuantity("+")}>+</button>
             </div>
-            <p>Total: { productInfo.price * quantity }</p>
+            <p>Total: ${ (productInfo.price * quantity).toFixed(2) }</p>
             <ReactModal
                 isOpen={confirmDelete}
                 ariaHideApp={false}

@@ -11,7 +11,7 @@ function Cart( { cartEndpoint, currentCart, setCurrentCart } ) {
 
     const updateDisplay = () => {
         try {
-            setDisplayTotal( subtotals.reduce((a,b)=>a+b) );
+            setDisplayTotal( (subtotals.reduce((a,b)=>a+b)).toFixed(2) );
         } catch {
             setFail(true);
             setDisplayTotal(0);
@@ -42,7 +42,7 @@ function Cart( { cartEndpoint, currentCart, setCurrentCart } ) {
                 )
             }
             <div>
-                Total: { displayTotal }
+                Total: ${ displayTotal }
                 <button onClick={()=>completeCheckout()}>Checkout</button>
             </div>
         </div>

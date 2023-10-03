@@ -24,7 +24,7 @@ const ProductDetails = ( { cartEndpoint, currentCart, setCurrentCart } ) => {
     return <div className="product-details">
         <img src={product.image} className="product-details-image" alt="" />
         <h2 className="product-details-title">{product.title}</h2>
-        <p className="product-details-price">{product.price}</p>
+        <p className="product-details-price">${product.price}</p>
         <p className="product-details-description" >{product.description}</p>
         <button onClick={()=>{addtoCart( product.id, cartEndpoint, currentCart, setCurrentCart )}}>Add to cart</button>
         <button onClick={()=>navigate("/")} >Go Home</button>

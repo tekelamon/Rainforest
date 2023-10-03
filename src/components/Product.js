@@ -17,7 +17,7 @@ function Product( { product:{id, title, image, price}, cartEndpoint, currentCart
         <div className="product">
             <h2 className="product-title">{title}</h2>
             <img className="product-image" src={image} alt="" />
-            <p className="product-price">{price}</p>
+            <p className="product-price">${price.toFixed(2)}</p>
             <button onClick={()=>navigate(`/product/${id}`)}>View Details</button>
             <button onClick={()=>{addtoCart( id, cartEndpoint, currentCart, setCurrentCart );popUp()}}>Add to cart</button>
             <ReactModal
