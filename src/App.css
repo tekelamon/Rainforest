@@ -101,3 +101,19 @@ nav a:hover {
 form > * {
   padding: 0.5rem;
 }
+
+.product-details {
+  margin: 2.5rem;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.product-details-image {
+  width: 40rem;
+  height: 40rem;
+}
+
+.product-details-price {
+  color: gray;
+}
