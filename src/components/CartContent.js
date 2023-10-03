@@ -73,6 +73,8 @@ function CartContent( { indexInSubtotals, product, cartEndpoint, setCurrentCart,
         cart.products = items;
         localStorage.setItem( cartEndpoint, JSON.stringify( cart ) );
         setCurrentCart( cart.products );
+        setConfirmDelete( false );
+        window.location.reload(false);
     };
 
     return (!fail) ? (
